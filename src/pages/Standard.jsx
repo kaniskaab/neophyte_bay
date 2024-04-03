@@ -52,11 +52,11 @@ export default function Standard() {
   const handleMouseMove = (event) => {
     if (!drawing) return;
     const { clientX, clientY } = event;
-    console.log(clientX+ " "+ clientY)
+    // console.log(clientX+ " "+ clientY)
     
     const container = document.getElementById('canvas-container');
     const containerRect = container.getBoundingClientRect();
-    console.log(clientX + " "+ containerRect.width);
+    // console.log(clientX + " "+ containerRect.width);
     clientX-60>=containerRect.width || clientY-20>= containerRect.height?handleMouseUp(event):console.log();
     clientX<=68 || clientY<=30?handleMouseUp(event):console.log();
 
@@ -102,8 +102,22 @@ export default function Standard() {
   const handleUndo = () => {
     if (undoStack.length === 0) return;
     const prevState = undoStack[undoStack.length - 1];
+    prevState.forEach(item => {
+      queue.forEach(name => {
+          if (item && parseInt(item.name.slice(4))== name) {
+            console.log("yes");
+            const index = queue.indexOf(name);
+            if(name!=-1){setQueue(queue.splice(index,0))};
+          }
+      });
+  });
+    // console.log(prevState)
     setUndoStack(undoStack.slice(0, -1));
     setShapes(prevState);
+ 
+
+  
+  
     
   };
 
